@@ -1,5 +1,6 @@
 /* App.css */
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,100..900;1,9..144,100..900&family=Inter:wght@100..900&family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
 
 
 * {
@@ -7,7 +8,7 @@
 }
 
 html {
-  font-family: 'Noto Sans JP', sans-serif;
+  font-family: 'Inter', sans-serif;
 }
 
 body {
@@ -39,18 +40,30 @@ body {
 }
 
 .text {
-  font-family: 'Noto Sans JP', sans-serif;
+  font-family: 'Inter', sans-serif;
   margin-top: 20px ; 
   font-size: 18px;
   color: #333; 
   text-align: center;
-  
 }
 
 @font-face {
   font-family: 'Prompt Thin';
   src: url('/fonts/Prompt-Thin.ttf') format('truetype');
   font-weight: 100;
+}
+
+@font-face {
+  font-family: 'Kanit', sans-serif;
+  src: url('https://fonts.gstatic.com/s/kanit/v7/nKKX-Go6G5tXcraBGwXP.woff2') format('woff2');
+  font-weight: 100, 200, 300, 400, 500, 600, 700, 800, 900;
+}
+
+/* Add Fraunces font */
+@font-face {
+  font-family: 'Fraunces', sans-serif;
+  src: url('https://fonts.gstatic.com/s/fraunces/v6/v8-8m-zJqK4mSLBISlSA6YAr7AMXSrPi5Jw.woff2') format('woff2');
+  font-weight: 100, 200, 300, 400, 500, 600, 700, 800, 900;
 }
 
 body {

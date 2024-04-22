@@ -6,8 +6,8 @@ const SearchPage = () => {
   const [herbsData, setHerbsData] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [searchHistory, setSearchHistory] = useState([]);
-  const [showHistory, setShowHistory] = useState(false); 
-  const [searchBarWidth, setSearchBarWidth] = useState(700); 
+  const [showHistory, setShowHistory] = useState(false);
+  const [searchBarWidth, setSearchBarWidth] = useState(700);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -75,14 +75,16 @@ const SearchPage = () => {
   const filteredHerbs = herbsData.filter((herb) => {
     const herbName = herb["ชื่อสมุนไพร"].toLowerCase();
     const query = searchQuery.toLowerCase();
-  
-    if (calculateSimilarity(herbName, query) >= 0.8 || herbName.includes(query)) {
-      return true; 
+
+    if (
+      calculateSimilarity(herbName, query) >= 0.8 ||
+      herbName.includes(query)
+    ) {
+      return true;
     } else {
       return false;
     }
   });
-  
 
   const filterHerbsByLetter = (letter) => {
     setSearchQuery(letter);
@@ -95,7 +97,7 @@ const SearchPage = () => {
           src="./logoseaherbs.png"
           alt="Logo Sea Herbs"
           className="logo"
-          style={{ width: "400px", height: "auto" }}
+          style={{ width: "668px", height: "auto" }}
         />
         <div className="container">
           <div className="scrollable-container">
@@ -112,21 +114,23 @@ const SearchPage = () => {
                 onChange={handleSearchInputChange}
                 onFocus={() => setShowHistory(true)}
                 onBlur={() => setShowHistory(false)}
+                fontFamily="Kanit, sans-serif"
                 onKeyPress={handleSearchInputChange}
                 style={{
                   background: "transparent",
                   border: "1px solid black",
-                  borderRadius: "11px",
+                  borderRadius: "25px",
                   outline: "none",
                   width: "700px",
-                  height: "50px",
-                  fontWeight: "100",
-                  fontSize: "24px",
+                  height: "60px",
+                  fontWeight: "400",
+                  fontSize: "20px",
                   transition: "0.8s",
                   padding: "20px",
                   marginTop: "50px",
-                  marginBottom: "20px",
-                  fontFamily: "Prompt, sans-serif",
+                  marginBottom: "27px",
+                  fontFamily: "Inter, sans-serif",
+                  color: "black",
                 }}
               />
               {showHistory && searchHistory.length > 0 && (
@@ -143,6 +147,7 @@ const SearchPage = () => {
                     borderRadius: "8px",
                     zIndex: "1000",
                     padding: "10px",
+                    fontFamily: "Kanit, sans-serif",
                   }}
                 >
                   {searchHistory.map((query, index) => (
@@ -164,7 +169,12 @@ const SearchPage = () => {
               ).map((letter, index) => (
                 <span
                   key={index}
-                  style={{ cursor: "pointer", margin: "5px", fontSize: "20px" }}
+                  style={{
+                    cursor: "pointer",
+                    margin: "5px",
+                    fontSize: "20px",
+                    fontFamily: "Kanit, sans-serif",
+                  }}
                   onClick={() => filterHerbsByLetter(letter)}
                 >
                   {letter}
@@ -180,19 +190,19 @@ const SearchPage = () => {
             >
               <p
                 style={{
-                  fontWeight: "300",
+                  fontWeight: "400",
                   fontSize: "24px",
-                  fontFamily: "Prompt, sans-serif",
+                  fontFamily: "Inter, sans-serif",
                 }}
               >
-                Popular Search
+                Our Herbs
               </p>
             </div>
             <div
               style={{
                 display: "flex",
                 flexWrap: "wrap",
-                gap: "5px",
+                gap: "20px",
                 justifyContent: "center",
                 padding: "20px",
               }}
@@ -202,7 +212,7 @@ const SearchPage = () => {
                   style={{
                     fontWeight: "300",
                     fontSize: "24px",
-                    fontFamily: "Prompt, sans-serif",
+                    fontFamily: "Inter, sans-serif",
                   }}
                 >
                   Data Not Found

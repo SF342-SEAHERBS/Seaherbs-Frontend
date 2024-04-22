@@ -5,8 +5,7 @@ import { useParams } from "react-router-dom";
 const ShowDataPage = () => {
   const [herbsData, setHerbsData] = useState([]);
   const { id } = useParams(); // Use id instead of index
-  const selectedHerb = herbsData.find(herb => herb["id"] === parseInt(id)); // Find herb by id
-
+  const selectedHerb = herbsData.find((herb) => herb["id"] === parseInt(id)); // Find herb by id
 
   useEffect(() => {
     // Fetch data from the appropriate endpoint
@@ -19,7 +18,6 @@ const ShowDataPage = () => {
         console.error("Error fetching data:", error);
       });
   }, []);
-
 
   // Ensure index is a valid number
   // const herbIndex = parseInt(index);
@@ -54,7 +52,7 @@ const ShowDataPage = () => {
           src="/logoseaherbs.png"
           alt="Logo Sea Herbs"
           className="logo"
-          style={{ width: "400px", height: "auto" }}
+          style={{ width: "668px", height: "auto" }}
         />
 
         <div className="container">
@@ -67,17 +65,18 @@ const ShowDataPage = () => {
                 style={{
                   background: "transparent",
                   border: "1px solid black",
-                  borderRadius: "11px",
+                  borderRadius: "25px",
                   outline: "none",
                   width: "700px",
-                  height: "50px",
-                  fontWeight: "100",
-                  fontSize: "24px",
+                  height: "60px",
+                  fontWeight: "400",
+                  fontSize: "20px",
                   transition: "0.8s",
                   padding: "20px",
                   marginTop: "50px",
-                  marginBottom: "20px",
-                  fontFamily: "Prompt, sans-serif",
+                  marginBottom: "27px",
+                  fontFamily: "Inter, sans-serif",
+                  color: "black",
                 }}
               />
             </div>
@@ -96,7 +95,7 @@ const ShowDataPage = () => {
                   style={{
                     fontWeight: "500",
                     fontSize: "48px",
-                    fontFamily: "Prompt, sans-serif",
+                    fontFamily: "Kanit, sans-serif",
                     textAlign: "center",
                   }}
                 >
@@ -108,6 +107,7 @@ const ShowDataPage = () => {
                     borderRadius: "15px",
                     overflow: "hidden",
                     alignItems: "center",
+                    fontFamily: "Kanit, sans-serif",
                   }}
                 >
                   <img

@@ -8,6 +8,7 @@ const Card = ({ photo, text, onClick }) => {
         cursor: "pointer",
         borderRadius: "15px",
         overflow: "hidden",
+        position: "relative",
       }}
       onClick={onClick}
     >
@@ -21,7 +22,19 @@ const Card = ({ photo, text, onClick }) => {
           borderRadius: "15px",
         }}
       />
-      <p style={{ textAlign: "center", marginTop: "10px",fontFamily: 'Prompt, sans-serif', }}>{text}</p>
+      <div
+        style={{
+          position: "absolute",
+          bottom: "0",
+          width: "100%",
+          backgroundColor: "rgba(0, 0, 0, 0.5)",
+          color: "#ffffff",
+          textAlign: "left",
+          padding: "10px 0",
+        }}
+      >
+        <p style={{ margin: "0",marginLeft:"18px", fontFamily: 'Kanit, sans-serif',fontWeight:"200" }}>{text}</p>
+      </div>
     </div>
   );
 };
