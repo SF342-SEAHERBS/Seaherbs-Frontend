@@ -57,7 +57,7 @@ const ShowDataPage = () => {
 
         <div className="container">
           <div className="scrollable-container">
-            <div className="search-container" style={{ textAlign: "center" }}>
+            {/* <div className="search-container" style={{ textAlign: "center" }}>
               <input
                 type="text"
                 placeholder="SEARCH"
@@ -79,7 +79,20 @@ const ShowDataPage = () => {
                   color: "black",
                 }}
               />
-            </div>
+              <img
+                src="../searchicon.png"
+                alt="Search Icon"
+                style={{
+                  position: "absolute",
+                  left: "980px",
+                  top: "52%",
+                  transform: "translateY(-50%)",
+                  width: "24px",
+                  height: "24px",
+                  zIndex: "1",
+                }}
+              />
+            </div> */}
 
             <div
               style={{
