@@ -47,11 +47,11 @@ body {
   text-align: center;
 }
 
-@font-face {
+/* @font-face {
   font-family: 'Prompt Thin';
   src: url('/fonts/Prompt-Thin.ttf') format('truetype');
   font-weight: 100;
-}
+} */
 
 @font-face {
   font-family: 'Kanit', sans-serif;
@@ -66,9 +66,9 @@ body {
   font-weight: 100, 200, 300, 400, 500, 600, 700, 800, 900;
 }
 
-body {
+/* body {
   font-family: 'Prompt Thin', sans-serif;
-}
+} */
 
 
 

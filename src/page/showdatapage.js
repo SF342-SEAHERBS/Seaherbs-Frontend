@@ -19,12 +19,6 @@ const ShowDataPage = () => {
       });
   }, []);
 
-  // Ensure index is a valid number
-  // const herbIndex = parseInt(index);
-  // Find the herb with the specified index
-  // const selectedHerb = isNaN(herbIndex) ? null : herbsData[herbIndex];
-
-  // Update herbData1 based on the selected herb
   const herbData1 = selectedHerb
     ? {
         ชื่อสมุนไพร: selectedHerb["ชื่อสมุนไพร"],
@@ -57,43 +51,6 @@ const ShowDataPage = () => {
 
         <div className="container">
           <div className="scrollable-container">
-            {/* <div className="search-container" style={{ textAlign: "center" }}>
-              <input
-                type="text"
-                placeholder="SEARCH"
-                className="input"
-                style={{
-                  background: "transparent",
-                  border: "1px solid black",
-                  borderRadius: "25px",
-                  outline: "none",
-                  width: "700px",
-                  height: "60px",
-                  fontWeight: "400",
-                  fontSize: "20px",
-                  transition: "0.8s",
-                  padding: "20px",
-                  marginTop: "50px",
-                  marginBottom: "27px",
-                  fontFamily: "Inter, sans-serif",
-                  color: "black",
-                }}
-              />
-              <img
-                src="../searchicon.png"
-                alt="Search Icon"
-                style={{
-                  position: "absolute",
-                  left: "980px",
-                  top: "52%",
-                  transform: "translateY(-50%)",
-                  width: "24px",
-                  height: "24px",
-                  zIndex: "1",
-                }}
-              />
-            </div> */}
-
             <div
               style={{
                 display: "flex",

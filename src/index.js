@@ -6,6 +6,7 @@ import "./index.css";
 import Home from "./App";
 import SearchPage from "./page/searchpage";
 import ShowDataPage from "./page/showdatapage";
+import TestOntology from "./page/testontology";
 
 export default function App() {
   return (
@@ -13,7 +14,9 @@ export default function App() {
       <Routes>
         <Route path="/" element={<Home />}></Route>
         <Route path="/search" element={<SearchPage />} />
-        <Route path="/showdata/:id" element={<ShowDataPage />} /></Routes>
+        <Route path="/showdata/:id" element={<ShowDataPage />} />
+        <Route path="/testontology" element={<TestOntology  />} />
+      </Routes>
     </BrowserRouter>
   );
 }
