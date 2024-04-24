@@ -11,14 +11,23 @@ const SearchPage = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch("http://localhost:3005/api/data")
-      .then((response) => response.json())
-      .then((data) => {
-        setHerbsData(data);
-      })
-      .catch((error) => {
-        console.error("Error fetching data:", error);
-      });
+    const fetchData = async () => {
+      try {
+        const response = await fetch('http://localhost:3001/post2/getAllData', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        });
+  
+        const responseData = await response.json();
+        setHerbsData(responseData);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    fetchData();
   }, []);
 
   const handleCardClick = (herbId) => {
@@ -76,8 +85,8 @@ const SearchPage = () => {
     return 1 - dp[len1][len2] / Math.max(len1, len2);
   };
 
-  const filteredHerbs = herbsData.filter((herb) => {
-    const herbName = herb["ชื่อสมุนไพร"].toLowerCase();
+  const filteredHerbs = herbsData.filter((herb, index) => {
+    const herbName = herb.name.toLowerCase();
     const query = searchQuery.toLowerCase();
 
     if (
@@ -147,7 +156,6 @@ const SearchPage = () => {
                       position: "relative",
                       right: "58px",
                       top: "5px",
-
                       width: "24px",
                       height: "24px",
                     }}
@@ -243,9 +251,9 @@ const SearchPage = () => {
                   <Card
                     key={index}
                     id={index}
-                    photo={herb["ลิ้งรูปภาพ"]}
-                    text={herb["ชื่อสมุนไพร"]}
-                    onClick={() => handleCardClick(herb["id"])}
+                    photo={herb.urlpicture}
+                    text={herb.name}
+                    onClick={() => handleCardClick(index)}
                   />
                 ))
               )}

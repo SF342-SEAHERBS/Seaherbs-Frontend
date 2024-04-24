@@ -41,7 +41,7 @@ const styles = {
   detail: {
     fontSize: "24px",
     fontWeight: "200",
-    fontFamily: "Kanit, sans-serif", // Adjust the font size as needed
+    fontFamily: "Kanit, sans-serif",
   },
   fontFamily: "Kanit, sans-serif",
 };
