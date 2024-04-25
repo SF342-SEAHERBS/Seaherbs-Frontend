@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Card from "../components/Card";
 import { useNavigate } from "react-router-dom";
+import Dropdown from "../components/Dropdown";
 
 const SearchPage = () => {
   const [herbsData, setHerbsData] = useState([]);
@@ -8,31 +9,57 @@ const SearchPage = () => {
   const [searchHistory, setSearchHistory] = useState([]);
   const [showHistory, setShowHistory] = useState(false);
   const [searchBarWidth, setSearchBarWidth] = useState(700);
+
   const navigate = useNavigate();
+
+  const origins = [
+    "ยุโรป",
+    "อเมริกาเหนือ",
+    "อเมริกาใต้",
+    "เอเชีย",
+    "แอฟริกา",
+    "โอเชียเนีย",
+    "อื่นๆ",
+  ];
+  const systems = [
+    "ระบบประสาท",
+    "ระบบย่อยอาหาร",
+    "ระบบภูมิคุ้มกัน",
+    "ระบบผิวหนัง",
+    "ระบบกล้ามเนื้อ",
+    "ระบบหมุนเวียนเลือด",
+    "ระบบโครงกระดูก",
+    "ระบบหายใจ",
+    "ระบบขับถ่าย",
+    "ระบบสืบพันธ์",
+    "อื่นๆ",
+  ];
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('http://localhost:3001/post2/getAllData', {
-          method: 'POST',
+        const response = await fetch("http://localhost:3001/post2/getAllData", {
+          method: "POST",
           headers: {
-            'Content-Type': 'application/json'
-          }
+            "Content-Type": "application/json",
+          },
         });
-  
+
         const responseData = await response.json();
         setHerbsData(responseData);
       } catch (error) {
-        console.error('Error fetching data:', error);
+        console.error("Error fetching data:", error);
       }
     };
 
     fetchData();
   }, []);
 
-  const handleCardClick = (herbId) => {
-    navigate(`/showdata/${herbId}`);
-    console.log(`Herb ${herbId} clicked!`);
+  const handleCardClick = (herbName) => {
+    const selectedHerb = herbsData.filter((herb) => {
+      return herb.name === herbName;
+    })[0];
+    navigate(`/showdata/${herbName}`, { state: { selectedHerb } });
   };
 
   const handleSearchInputChange = (event) => {
@@ -88,7 +115,6 @@ const SearchPage = () => {
   const filteredHerbs = herbsData.filter((herb, index) => {
     const herbName = herb.name.toLowerCase();
     const query = searchQuery.toLowerCase();
-
     if (
       calculateSimilarity(herbName, query) >= 0.8 ||
       herbName.includes(query)
@@ -213,6 +239,27 @@ const SearchPage = () => {
             <div
               style={{
                 display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <div
+                style={{
+                  display: "flex",
+                  marginBottom: "10px",
+                }}
+              >
+                {/* <div style={{ marginRight: "10px" }}>
+                  <Dropdown options={origins} defaultOption="Select Origin" />
+                </div>
+                <div>
+                  <Dropdown options={systems} defaultOption="Select Systems" />
+                </div> */}
+              </div>
+            </div>
+            <div
+              style={{
+                display: "flex",
                 gap: "5px",
                 justifyContent: "center",
               }}
@@ -253,7 +300,7 @@ const SearchPage = () => {
                     id={index}
                     photo={herb.urlpicture}
                     text={herb.name}
-                    onClick={() => handleCardClick(index)}
+                    onClick={() => handleCardClick(herb.name)}
                   />
                 ))
               )}

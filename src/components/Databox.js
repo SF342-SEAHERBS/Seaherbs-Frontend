@@ -12,7 +12,7 @@ const HerbCard = ({ data }) => {
   return (
     <div>
       <div style={styles.container}>
-        <div style={styles.containercard}>{renderData()}\</div>
+        <div style={styles.containercard}>{renderData()}</div>
       </div>
     </div>
   );

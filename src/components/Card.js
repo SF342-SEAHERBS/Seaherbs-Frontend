@@ -10,7 +10,7 @@ const Card = ({ photo, text, onClick }) => {
         overflow: "hidden",
         position: "relative",
       }}
-      // onClick={onClick}
+      onClick={onClick}
     >
       <img
         src={photo}

@@ -1,41 +1,63 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import HerbCard from "../components/Databox";
-import { useParams } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 const ShowDataPage = () => {
-  const [herbsData, setHerbsData] = useState([]);
-  const { id } = useParams(); // Use id instead of index
-  const selectedHerb = herbsData.find((herb) => herb["id"] === parseInt(id)); // Find herb by id
+  // const [herbsData, setHerbsData] = useState([]);
+  // const { id } = useParams(); // Use id instead of index
+  // const selectedHerb = herbsData.find((herb) => herb.index === parseInt(id)); // Find herb by id
 
-  useEffect(() => {
-    // Fetch data from the appropriate endpoint
-    fetch("http://localhost:3005/api/data")
-      .then((response) => response.json())
-      .then((data) => {
-        setHerbsData(data);
-      })
-      .catch((error) => {
-        console.error("Error fetching data:", error);
-      });
-  }, []);
+  // useEffect(() => {
+  //   // Fetch data from the appropriate endpoint
+  //   fetch("http://localhost:3005/api/data")
+  //     .then((response) => response.json())
+  //     .then((data) => {
+  //       setHerbsData(data);
+  //     })
+  //     .catch((error) => {
+  //       console.error("Error fetching data:", error);
+  //     });
+  // }, []);
+
+  const location = useLocation();
+  const { selectedHerb } = location.state;
+  console.log(selectedHerb);
 
   const herbData1 = selectedHerb
     ? {
-        ชื่อสมุนไพร: selectedHerb["ชื่อสมุนไพร"],
-        ชื่อวิทยาศาสตร์: selectedHerb["ชื่อวิทยาศาสตร์"],
-        ชื่อพ้อง: selectedHerb["ชื่อพ้อง"],
-        ชื่อวงศ์: selectedHerb["ชื่อวงศ์"],
-        ชื่ออื่นๆ: selectedHerb["ชื่ออื่นๆ"] || "No other names available",
+        ชื่อไทย: selectedHerb.name,
+        ชื่อสามัญ: selectedHerb.englishName,
+        ชื่อท้องถิ่น: selectedHerb.otherName,
+        ชื่อวิทยาศาสตร์: selectedHerb.binomialName,
+        ชื่อวงศ์: selectedHerb.family,
+        สกุล: selectedHerb.genusName,
+        สปีชีส์: selectedHerb.specificName,
+        ชื่อพ้อง: selectedHerb.synonyms,
       }
     : {};
   const herbData2 = selectedHerb
     ? {
-        ลักษณะทางพฤกษศาสตร์: selectedHerb["ลักษณะทางพฤกษศาสตร์"],
+        ลักษณะทางพฤกษศาสตร์: selectedHerb.character,
+        สภาพนิเวศวิทยา: selectedHerb.ecology,
       }
     : {};
   const herbData3 = selectedHerb
     ? {
-        สรรพคุณ: selectedHerb["สรรพคุณ"],
+        สรรพคุณ: selectedHerb.properties,
+        องค์ประกอบทางเคมี: selectedHerb.chemical,
+        การศึกษาทางเภสัชวิทยา: selectedHerb.pharmacology,
+        การศึกษาทางพิษวิทยา: selectedHerb.toxicology,
+      }
+    : {};
+  const herbData4 = selectedHerb
+    ? {
+        การใช้ประโยชน์: selectedHerb.howToUse,
+      }
+    : {};
+  const herbData5 = selectedHerb
+    ? {
+        ถิ่นกำเนิด: selectedHerb.origin,
+        แหล่งอ้างอิงข้อมูล: selectedHerb.reference,
       }
     : {};
 
@@ -51,6 +73,43 @@ const ShowDataPage = () => {
 
         <div className="container">
           <div className="scrollable-container">
+            {/* <div className="search-container" style={{ textAlign: "center" }}>
+              <input
+                type="text"
+                placeholder="SEARCH"
+                className="input"
+                style={{
+                  background: "transparent",
+                  border: "1px solid black",
+                  borderRadius: "25px",
+                  outline: "none",
+                  width: "700px",
+                  height: "60px",
+                  fontWeight: "400",
+                  fontSize: "20px",
+                  transition: "0.8s",
+                  padding: "20px",
+                  marginTop: "50px",
+                  marginBottom: "27px",
+                  fontFamily: "Inter, sans-serif",
+                  color: "black",
+                }}
+              />
+              <img
+                src="../searchicon.png"
+                alt="Search Icon"
+                style={{
+                  position: "absolute",
+                  left: "980px",
+                  top: "52%",
+                  transform: "translateY(-50%)",
+                  width: "24px",
+                  height: "24px",
+                  zIndex: "1",
+                }}
+              />
+            </div> */}
+
             <div
               style={{
                 display: "flex",
@@ -69,7 +128,7 @@ const ShowDataPage = () => {
                     textAlign: "center",
                   }}
                 >
-                  {selectedHerb && <p>{selectedHerb["ชื่อสมุนไพร"]}</p>}
+                  {selectedHerb && <p>{selectedHerb.name}</p>}
                 </p>
 
                 <div
@@ -81,10 +140,7 @@ const ShowDataPage = () => {
                   }}
                 >
                   <img
-                    // src={
-                    //   "https://images.unsplash.com/photo-1561407958-54aa9fa49a21?q=80&w=2448&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                    // }
-                    src={selectedHerb && selectedHerb["ลิ้งรูปภาพ"]}
+                    src={selectedHerb && selectedHerb.urlpicture}
                     alt={`Card`}
                     style={{
                       width: "800px",
@@ -114,10 +170,12 @@ const ShowDataPage = () => {
                   </div>
                   <div>
                     <HerbCard data={herbData3} />
+                    <HerbCard data={herbData4} />
                   </div>
                 </div>
                 <div>
                   <HerbCard data={herbData2} />
+                  <HerbCard data={herbData5} />
                 </div>
               </div>
             </div>

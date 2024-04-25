@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import axios from 'axios';
+
 
 const Testsearch = () => {
     const [data, setData] = useState([]);
@@ -35,7 +35,7 @@ const Testsearch = () => {
               <p>Family: {item.family}</p>
               <p>Other Name: {item.otherName}</p>
               <p>Properties: {item.properties}</p>
-              <p>Synonym: {item.synonym}</p>
+              <p>Synonym: {item.synonyms}</p>
               {/* Add more fields as needed */}
             </li>
           ))}
