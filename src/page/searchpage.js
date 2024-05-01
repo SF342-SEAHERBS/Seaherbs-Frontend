@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Card from "../components/Card";
 import { useNavigate } from "react-router-dom";
-import Dropdown from "../components/Dropdown";
 
 const SearchPage = () => {
   const [herbsData, setHerbsData] = useState([]);
@@ -11,30 +10,6 @@ const SearchPage = () => {
   const [searchBarWidth, setSearchBarWidth] = useState(700);
 
   const navigate = useNavigate();
-
-  const origins = [
-    "Europe",
-    "NorthAmerica",
-    "SouthAmerica",
-    "Asia",
-    "SouthAsia",
-    "Africa",
-    "Oceania",
-    "OtherLandmass",
-  ];
-  const systems = [
-    "NervousSystem",
-    "DigestiveSystem",
-    "ImmuneSystem",
-    "IntegumentarySystem",
-    "MuscularSystem",
-    "CirculatorySystem",
-    "SkeletalSystem",
-    "RespiratorySystem",
-    "UrinarySystem",
-    "ReproductiveSystem",
-    "Other",
-  ];
 
   useEffect(() => {
     const fetchData = async () => {
@@ -47,9 +22,6 @@ const SearchPage = () => {
         });
 
         const responseData = await response.json();
-        // const sortedData = responseData.sort((a, b) => a.name.localeCompare(b.name, 'th'));
-        // setHerbsData(sortedData);
-
         setHerbsData(responseData);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -128,107 +100,6 @@ const SearchPage = () => {
       return false;
     }
   });
-
-  const filterHerbsByLetter = (letter) => {
-    setSearchQuery(letter);
-  };
-
-  const fetchOriginData = async (originName) => {
-    try {
-      const response = await fetch("http://localhost:3001/origin", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          name: originName,
-        }),
-      });
-
-      const responseData = await response.text();
-      return responseData;
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    }
-  };
-
-  const filterFromOrigin = async (originName) => {
-    const result = await fetchOriginData(originName);
-    let newOriginsFormat = [];
-    Array.from(JSON.parse(result).origins).forEach((herb) => {
-      newOriginsFormat.push({
-        name: herb.name,
-        urlpicture: herb.urlpicture[0],
-        otherName: herb.otherName,
-        synonyms: herb.synonyms,
-        binomialName: herb.binomialName,
-        family: herb.family,
-        englishName: herb.englishName,
-        pharmacology: herb.pharmacology,
-        origin: herb.origin,
-        properties: herb.properties,
-        genusName: herb.genusName,
-        specificName: herb.specificName,
-        ecology: herb.ecology,
-        chemical: herb.chemical,
-        toxicology: herb.toxicology,
-        howToUse: herb.howToUse,
-        reference: herb.reference,
-        character: herb.character,
-
-      });
-      console.log(herb);
-    });
-
-    setHerbsData(newOriginsFormat);
-  };
-
-  const fetchSystemData = async (system) => {
-    try {
-      const response = await fetch("http://localhost:3001/system", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          name: system,
-        }),
-      });
-
-      const responseData = await response.text();
-      return responseData;
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    }
-  };
-
-  const filterFromSystem = async (systemName) => {
-    const result = await fetchSystemData(systemName);
-    let newSystemFormat = [];
-    Array.from(JSON.parse(result).systems).forEach((herb) => {
-      newSystemFormat.push({
-        name: herb.name,
-        urlpicture: herb.urlpicture[0],
-        otherName: herb.otherName,
-        synonyms: herb.synonyms,
-        binomialName: herb.binomialName,
-        family: herb.family,
-        englishName: herb.englishName,
-        pharmacology: herb.pharmacology,
-        origin: herb.origin,
-        properties: herb.properties,
-        genusName: herb.genusName,
-        specificName: herb.specificName,
-        ecology: herb.ecology,
-        chemical: herb.chemical,
-        toxicology: herb.toxicology,
-        howToUse: herb.howToUse,
-        reference: herb.reference,
-        character: herb.character,
-      });
-    });
-    setHerbsData(newSystemFormat);
-  };
 
   return (
     <div className="app-container">
@@ -331,40 +202,11 @@ const SearchPage = () => {
                     fontSize: "20px",
                     fontFamily: "Kanit, sans-serif",
                   }}
-                  onClick={() => filterHerbsByLetter(letter)}
+                  onClick={() => setSearchQuery(letter)}
                 >
                   {letter}
                 </span>
               ))}
-            </div>
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              <div
-                style={{
-                  display: "flex",
-                  marginBottom: "10px",
-                }}
-              >
-                <div style={{ marginRight: "10px" }}>
-                  <Dropdown
-                    options={origins}
-                    defaultOption="Select Origin"
-                    returnData={filterFromOrigin}
-                  />
-                </div>
-                <div>
-                  <Dropdown
-                    options={systems}
-                    defaultOption="Select Systems"
-                    returnData={filterFromSystem}
-                  />
-                </div>
-              </div>
             </div>
             <div
               style={{
