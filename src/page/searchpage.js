@@ -12,30 +12,6 @@ const SearchPage = () => {
 
   const navigate = useNavigate();
 
-  const origins = [
-    "Europe",
-    "NorthAmerica",
-    "SouthAmerica",
-    "Asia",
-    "SouthAsia",
-    "Africa",
-    "Oceania",
-    "OtherLandmass",
-  ];
-  const systems = [
-    "NervousSystem",
-    "DigestiveSystem",
-    "ImmuneSystem",
-    "IntegumentarySystem",
-    "MuscularSystem",
-    "CirculatorySystem",
-    "SkeletalSystem",
-    "RespiratorySystem",
-    "UrinarySystem",
-    "ReproductiveSystem",
-    "Other",
-  ];
-
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -47,9 +23,6 @@ const SearchPage = () => {
         });
 
         const responseData = await response.json();
-        // const sortedData = responseData.sort((a, b) => a.name.localeCompare(b.name, 'th'));
-        // setHerbsData(sortedData);
-
         setHerbsData(responseData);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -60,9 +33,7 @@ const SearchPage = () => {
   }, []);
 
   const handleCardClick = (herbName) => {
-    const selectedHerb = herbsData.filter((herb) => {
-      return herb.name === herbName;
-    })[0];
+    const selectedHerb = herbsData.find((herb) => herb.name === herbName);
     navigate(`/showdata/${herbName}`, { state: { selectedHerb } });
   };
 
@@ -92,143 +63,6 @@ const SearchPage = () => {
       setSearchBarWidth(searchBar.offsetWidth);
     }
   }, [searchQuery]);
-
-  const calculateSimilarity = (str1, str2) => {
-    const len1 = str1.length;
-    const len2 = str2.length;
-    const dp = Array.from(Array(len1 + 1), () => Array(len2 + 1).fill(0));
-    for (let i = 0; i <= len1; i++) {
-      dp[i][0] = i;
-    }
-    for (let j = 0; j <= len2; j++) {
-      dp[0][j] = j;
-    }
-    for (let i = 1; i <= len1; i++) {
-      for (let j = 1; j <= len2; j++) {
-        const cost = str1[i - 1] === str2[j - 1] ? 0 : 1;
-        dp[i][j] = Math.min(
-          dp[i - 1][j] + 1,
-          dp[i][j - 1] + 1,
-          dp[i - 1][j - 1] + cost
-        );
-      }
-    }
-    return 1 - dp[len1][len2] / Math.max(len1, len2);
-  };
-
-  const filteredHerbs = herbsData.filter((herb, index) => {
-    const herbName = herb.name.toLowerCase();
-    const query = searchQuery.toLowerCase();
-    if (
-      calculateSimilarity(herbName, query) >= 0.8 ||
-      herbName.includes(query)
-    ) {
-      return true;
-    } else {
-      return false;
-    }
-  });
-
-  const filterHerbsByLetter = (letter) => {
-    setSearchQuery(letter);
-  };
-
-  const fetchOriginData = async (originName) => {
-    try {
-      const response = await fetch("http://localhost:3001/origin", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          name: originName,
-        }),
-      });
-
-      const responseData = await response.text();
-      return responseData;
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    }
-  };
-
-  const filterFromOrigin = async (originName) => {
-    const result = await fetchOriginData(originName);
-    let newOriginsFormat = [];
-    Array.from(JSON.parse(result).origins).forEach((herb) => {
-      newOriginsFormat.push({
-        name: herb.name,
-        urlpicture: herb.urlpicture[0],
-        otherName: herb.otherName,
-        synonyms: herb.synonyms,
-        binomialName: herb.binomialName,
-        family: herb.family,
-        englishName: herb.englishName,
-        pharmacology: herb.pharmacology,
-        origin: herb.origin,
-        properties: herb.properties,
-        genusName: herb.genusName,
-        specificName: herb.specificName,
-        ecology: herb.ecology,
-        chemical: herb.chemical,
-        toxicology: herb.toxicology,
-        howToUse: herb.howToUse,
-        reference: herb.reference,
-        character: herb.character,
-
-      });
-      console.log(herb);
-    });
-
-    setHerbsData(newOriginsFormat);
-  };
-
-  const fetchSystemData = async (system) => {
-    try {
-      const response = await fetch("http://localhost:3001/system", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          name: system,
-        }),
-      });
-
-      const responseData = await response.text();
-      return responseData;
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    }
-  };
-
-  const filterFromSystem = async (systemName) => {
-    const result = await fetchSystemData(systemName);
-    let newSystemFormat = [];
-    Array.from(JSON.parse(result).systems).forEach((herb) => {
-      newSystemFormat.push({
-        name: herb.name,
-        urlpicture: herb.urlpicture[0],
-        otherName: herb.otherName,
-        synonyms: herb.synonyms,
-        binomialName: herb.binomialName,
-        family: herb.family,
-        englishName: herb.englishName,
-        pharmacology: herb.pharmacology,
-        origin: herb.origin,
-        properties: herb.properties,
-        genusName: herb.genusName,
-        specificName: herb.specificName,
-        ecology: herb.ecology,
-        chemical: herb.chemical,
-        toxicology: herb.toxicology,
-        howToUse: herb.howToUse,
-        reference: herb.reference,
-        character: herb.character,
-      });
-    });
-    setHerbsData(newSystemFormat);
-  };
 
   return (
     <div className="app-container">
@@ -316,61 +150,7 @@ const SearchPage = () => {
               style={{
                 display: "flex",
                 justifyContent: "center",
-                marginBottom: "10px",
-                marginTop: "10px",
-              }}
-            >
-              {Array.from(Array(46), (_, i) =>
-                String.fromCharCode(3585 + i)
-              ).map((letter, index) => (
-                <span
-                  key={index}
-                  style={{
-                    cursor: "pointer",
-                    margin: "5px",
-                    fontSize: "20px",
-                    fontFamily: "Kanit, sans-serif",
-                  }}
-                  onClick={() => filterHerbsByLetter(letter)}
-                >
-                  {letter}
-                </span>
-              ))}
-            </div>
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "center",
                 alignItems: "center",
-              }}
-            >
-              <div
-                style={{
-                  display: "flex",
-                  marginBottom: "10px",
-                }}
-              >
-                <div style={{ marginRight: "10px" }}>
-                  <Dropdown
-                    options={origins}
-                    defaultOption="Select Origin"
-                    returnData={filterFromOrigin}
-                  />
-                </div>
-                <div>
-                  <Dropdown
-                    options={systems}
-                    defaultOption="Select Systems"
-                    returnData={filterFromSystem}
-                  />
-                </div>
-              </div>
-            </div>
-            <div
-              style={{
-                display: "flex",
-                gap: "5px",
-                justifyContent: "center",
               }}
             >
               <p
@@ -392,27 +172,15 @@ const SearchPage = () => {
                 padding: "20px",
               }}
             >
-              {filteredHerbs.length === 0 ? (
-                <p
-                  style={{
-                    fontWeight: "300",
-                    fontSize: "24px",
-                    fontFamily: "Inter, sans-serif",
-                  }}
-                >
-                  Data Not Found
-                </p>
-              ) : (
-                filteredHerbs.map((herb, index) => (
-                  <Card
-                    key={index}
-                    id={index}
-                    photo={herb.urlpicture}
-                    text={herb.name}
-                    onClick={() => handleCardClick(herb.name)}
-                  />
-                ))
-              )}
+              {herbsData.map((herb, index) => (
+                <Card
+                  key={index}
+                  id={index}
+                  photo={herb.urlpicture}
+                  text={herb.name}
+                  onClick={() => handleCardClick(herb.name)}
+                />
+              ))}
             </div>
           </div>
         </div>
