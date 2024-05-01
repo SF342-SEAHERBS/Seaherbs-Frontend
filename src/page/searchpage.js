@@ -64,13 +64,127 @@ const SearchPage = () => {
     }
   }, [searchQuery]);
 
-  const filteredHerbs = herbsData.filter((herb) =>
-    herb.name.toLowerCase().includes(searchQuery.toLowerCase())
-  );
-
   return (
     <div className="app-container">
-      {/* Your JSX code here */}
+      <div className="flex-container">
+        <img
+          src="./logoseaherbs.png"
+          alt="Logo Sea Herbs"
+          className="logo"
+          style={{ width: "668px", height: "auto" }}
+        />
+        <div className="container">
+          <div className="scrollable-container">
+            <div
+              className="search-container"
+              style={{ textAlign: "center", position: "relative" }}
+            >
+              <div style={{ position: "relative" }}>
+                <div>
+                  <input
+                    id="search-bar"
+                    type="text"
+                    placeholder="SEARCH"
+                    className="input"
+                    value={searchQuery}
+                    onChange={handleSearchInputChange}
+                    onFocus={() => setShowHistory(true)}
+                    onBlur={() => setShowHistory(false)}
+                    fontFamily="Kanit, sans-serif"
+                    onKeyPress={handleSearchInputChange}
+                    style={{
+                      background: "transparent",
+                      border: "1px solid black",
+                      borderRadius: "25px",
+                      outline: "none",
+                      width: "700px",
+                      height: "60px",
+                      fontWeight: "400",
+                      fontSize: "20px",
+                      transition: "0.8s",
+                      padding: "20px",
+                      marginTop: "50px",
+                      marginBottom: "27px",
+                      fontFamily: "Inter, sans-serif",
+                      color: "black",
+                    }}
+                  />
+                  <img
+                    src="../searchicon.png"
+                    alt="Search Icon"
+                    onClick={handleSearchIconClick}
+                    style={{
+                      position: "relative",
+                      right: "58px",
+                      top: "5px",
+                      width: "24px",
+                      height: "24px",
+                    }}
+                  />
+                </div>
+                {showHistory && searchHistory.length > 0 && (
+                  <div
+                    className="history-container"
+                    style={{
+                      position: "absolute",
+                      top: "calc(100% + 5px)",
+                      left: "50%",
+                      transform: "translateX(-50%)",
+                      width: `${searchBarWidth}px`,
+                      backgroundColor: "#fff",
+                      boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
+                      borderRadius: "8px",
+                      zIndex: "1000",
+                      padding: "10px",
+                      fontFamily: "Kanit, sans-serif",
+                    }}
+                  >
+                    {searchHistory.map((query, index) => (
+                      <p key={index}>{query}</p>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </div>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <p
+                style={{
+                  fontWeight: "400",
+                  fontSize: "24px",
+                  fontFamily: "Inter, sans-serif",
+                }}
+              >
+                Our Herbs
+              </p>
+            </div>
+            <div
+              style={{
+                display: "flex",
+                flexWrap: "wrap",
+                gap: "20px",
+                justifyContent: "center",
+                padding: "20px",
+              }}
+            >
+              {herbsData.map((herb, index) => (
+                <Card
+                  key={index}
+                  id={index}
+                  photo={herb.urlpicture}
+                  text={herb.name}
+                  onClick={() => handleCardClick(herb.name)}
+                />
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
