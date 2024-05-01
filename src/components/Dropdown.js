@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 
-const Dropdown = ({ options, defaultOption, returnData }) => {
+const Dropdowns = ({ options, defaultOption, returnData }) => {
   const [isActive, setIsActive] = useState(false);
   const [selectedOption, setSelectedOption] = useState(defaultOption);
   const buttonRef = useRef(null);
@@ -58,8 +58,8 @@ const Dropdown = ({ options, defaultOption, returnData }) => {
           color: "black",
           transition: "0.3s all ease",
           fontFamily: "Inter, sans-serif",
-          fontWeight:"bolder",
-          boxShadow:"rgba(0, 0, 0, 0.1) 0px 4px 12px"
+          fontWeight: "bolder",
+          boxShadow: "rgba(0, 0, 0, 0.1) 0px 4px 12px",
         }}
       >
         <label
@@ -68,7 +68,6 @@ const Dropdown = ({ options, defaultOption, returnData }) => {
           style={{
             fontSize: "0.8rem",
             fontFamily: "Inter, sans-serif",
-            
           }}
         >
           {selectedOption}
@@ -89,19 +88,19 @@ const Dropdown = ({ options, defaultOption, returnData }) => {
         <ul
           className="options"
           style={{
-            paddingLeft: "1rem",
+            paddingLeft: "0",
             position: "absolute",
             top: "3rem",
             listStyleType: "none",
             width: "100%",
             border: "0.8px solid black",
             borderRadius: "1rem",
-            fontSize: "0.6rem",
+            fontSize: "0.7rem",
             fontFamily: "Inter, sans-serif",
             color: "black",
             overflow: "hidden",
             transition: "all 0.2s ease-in",
-            backgroundColor:"white",
+            backgroundColor: "white",
             clipPath: "polygon(0 0, 100% 0%, 100% 100%, 0% 100%)",
             zIndex: "999",
           }}
@@ -112,7 +111,7 @@ const Dropdown = ({ options, defaultOption, returnData }) => {
               className="option"
               onClick={() => handleOptionClick(option)}
               style={{
-                padding: "0.6rem",
+                padding: "0.5rem",
                 cursor: "pointer",
                 transition: "background, color 0.3s ease",
               }}
@@ -126,4 +125,4 @@ const Dropdown = ({ options, defaultOption, returnData }) => {
   );
 };
 
-export default Dropdown;
+export default Dropdowns;

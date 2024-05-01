@@ -47,6 +47,9 @@ const SearchPage = () => {
         });
 
         const responseData = await response.json();
+        // const sortedData = responseData.sort((a, b) => a.name.localeCompare(b.name, 'th'));
+        // setHerbsData(sortedData);
+
         setHerbsData(responseData);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -156,8 +159,27 @@ const SearchPage = () => {
       newOriginsFormat.push({
         name: herb.name,
         urlpicture: herb.urlpicture[0],
+        otherName: herb.otherName,
+        synonyms: herb.synonyms,
+        binomialName: herb.binomialName,
+        family: herb.family,
+        englishName: herb.englishName,
+        pharmacology: herb.pharmacology,
+        origin: herb.origin,
+        properties: herb.properties,
+        genusName: herb.genusName,
+        specificName: herb.specificName,
+        ecology: herb.ecology,
+        chemical: herb.chemical,
+        toxicology: herb.toxicology,
+        howToUse: herb.howToUse,
+        reference: herb.reference,
+        character: herb.character,
+
       });
+      console.log(herb);
     });
+
     setHerbsData(newOriginsFormat);
   };
 
@@ -187,6 +209,22 @@ const SearchPage = () => {
       newSystemFormat.push({
         name: herb.name,
         urlpicture: herb.urlpicture[0],
+        otherName: herb.otherName,
+        synonyms: herb.synonyms,
+        binomialName: herb.binomialName,
+        family: herb.family,
+        englishName: herb.englishName,
+        pharmacology: herb.pharmacology,
+        origin: herb.origin,
+        properties: herb.properties,
+        genusName: herb.genusName,
+        specificName: herb.specificName,
+        ecology: herb.ecology,
+        chemical: herb.chemical,
+        toxicology: herb.toxicology,
+        howToUse: herb.howToUse,
+        reference: herb.reference,
+        character: herb.character,
       });
     });
     setHerbsData(newSystemFormat);

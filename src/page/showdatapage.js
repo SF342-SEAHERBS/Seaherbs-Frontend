@@ -3,22 +3,6 @@ import HerbCard from "../components/Databox";
 import { useLocation } from "react-router-dom";
 
 const ShowDataPage = () => {
-  // const [herbsData, setHerbsData] = useState([]);
-  // const { id } = useParams(); // Use id instead of index
-  // const selectedHerb = herbsData.find((herb) => herb.index === parseInt(id)); // Find herb by id
-
-  // useEffect(() => {
-  //   // Fetch data from the appropriate endpoint
-  //   fetch("http://localhost:3005/api/data")
-  //     .then((response) => response.json())
-  //     .then((data) => {
-  //       setHerbsData(data);
-  //     })
-  //     .catch((error) => {
-  //       console.error("Error fetching data:", error);
-  //     });
-  // }, []);
-
   const location = useLocation();
   const { selectedHerb } = location.state;
   console.log(selectedHerb);
@@ -73,43 +57,6 @@ const ShowDataPage = () => {
 
         <div className="container">
           <div className="scrollable-container">
-            {/* <div className="search-container" style={{ textAlign: "center" }}>
-              <input
-                type="text"
-                placeholder="SEARCH"
-                className="input"
-                style={{
-                  background: "transparent",
-                  border: "1px solid black",
-                  borderRadius: "25px",
-                  outline: "none",
-                  width: "700px",
-                  height: "60px",
-                  fontWeight: "400",
-                  fontSize: "20px",
-                  transition: "0.8s",
-                  padding: "20px",
-                  marginTop: "50px",
-                  marginBottom: "27px",
-                  fontFamily: "Inter, sans-serif",
-                  color: "black",
-                }}
-              />
-              <img
-                src="../searchicon.png"
-                alt="Search Icon"
-                style={{
-                  position: "absolute",
-                  left: "980px",
-                  top: "52%",
-                  transform: "translateY(-50%)",
-                  width: "24px",
-                  height: "24px",
-                  zIndex: "1",
-                }}
-              />
-            </div> */}
-
             <div
               style={{
                 display: "flex",
