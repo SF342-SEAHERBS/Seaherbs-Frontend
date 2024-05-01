@@ -8,7 +8,7 @@ const TestOntology = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("http://localhost:3001/sparql", { herbName: query });
+      const response = await axios.post("http://localhost:3001/sparql2", { herbName: query });
       setResult(response.data);
     } catch (error) {
       console.error(error);

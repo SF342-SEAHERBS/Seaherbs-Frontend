@@ -13,26 +13,27 @@ const SearchPage = () => {
   const navigate = useNavigate();
 
   const origins = [
-    "ยุโรป",
-    "อเมริกาเหนือ",
-    "อเมริกาใต้",
-    "เอเชีย",
-    "แอฟริกา",
-    "โอเชียเนีย",
-    "อื่นๆ",
+    "Europe",
+    "NorthAmerica",
+    "SouthAmerica",
+    "Asia",
+    "SouthAsia",
+    "Africa",
+    "Oceania",
+    "OtherLandmass",
   ];
   const systems = [
-    "ระบบประสาท",
-    "ระบบย่อยอาหาร",
-    "ระบบภูมิคุ้มกัน",
-    "ระบบผิวหนัง",
-    "ระบบกล้ามเนื้อ",
-    "ระบบหมุนเวียนเลือด",
-    "ระบบโครงกระดูก",
-    "ระบบหายใจ",
-    "ระบบขับถ่าย",
-    "ระบบสืบพันธ์",
-    "อื่นๆ",
+    "NervousSystem",
+    "DigestiveSystem",
+    "ImmuneSystem",
+    "IntegumentarySystem",
+    "MuscularSystem",
+    "CirculatorySystem",
+    "SkeletalSystem",
+    "RespiratorySystem",
+    "UrinarySystem",
+    "ReproductiveSystem",
+    "Other",
   ];
 
   useEffect(() => {
@@ -127,6 +128,68 @@ const SearchPage = () => {
 
   const filterHerbsByLetter = (letter) => {
     setSearchQuery(letter);
+  };
+
+  const fetchOriginData = async (originName) => {
+    try {
+      const response = await fetch("http://localhost:3001/origin", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: originName,
+        }),
+      });
+
+      const responseData = await response.text();
+      return responseData;
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+
+  const filterFromOrigin = async (originName) => {
+    const result = await fetchOriginData(originName);
+    let newOriginsFormat = [];
+    Array.from(JSON.parse(result).origins).forEach((herb) => {
+      newOriginsFormat.push({
+        name: herb.name,
+        urlpicture: herb.urlpicture[0],
+      });
+    });
+    setHerbsData(newOriginsFormat);
+  };
+
+  const fetchSystemData = async (system) => {
+    try {
+      const response = await fetch("http://localhost:3001/system", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: system,
+        }),
+      });
+
+      const responseData = await response.text();
+      return responseData;
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+
+  const filterFromSystem = async (systemName) => {
+    const result = await fetchSystemData(systemName);
+    let newSystemFormat = [];
+    Array.from(JSON.parse(result).systems).forEach((herb) => {
+      newSystemFormat.push({
+        name: herb.name,
+        urlpicture: herb.urlpicture[0],
+      });
+    });
+    setHerbsData(newSystemFormat);
   };
 
   return (
@@ -249,12 +312,20 @@ const SearchPage = () => {
                   marginBottom: "10px",
                 }}
               >
-                {/* <div style={{ marginRight: "10px" }}>
-                  <Dropdown options={origins} defaultOption="Select Origin" />
+                <div style={{ marginRight: "10px" }}>
+                  <Dropdown
+                    options={origins}
+                    defaultOption="Select Origin"
+                    returnData={filterFromOrigin}
+                  />
                 </div>
                 <div>
-                  <Dropdown options={systems} defaultOption="Select Systems" />
-                </div> */}
+                  <Dropdown
+                    options={systems}
+                    defaultOption="Select Systems"
+                    returnData={filterFromSystem}
+                  />
+                </div>
               </div>
             </div>
             <div

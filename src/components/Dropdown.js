@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 
-const Dropdown = ({ options, defaultOption }) => {
+const Dropdown = ({ options, defaultOption, returnData }) => {
   const [isActive, setIsActive] = useState(false);
   const [selectedOption, setSelectedOption] = useState(defaultOption);
   const buttonRef = useRef(null);
@@ -30,6 +30,7 @@ const Dropdown = ({ options, defaultOption }) => {
   const handleOptionClick = (option) => {
     setSelectedOption(option);
     setIsActive(false);
+    returnData(option);
     buttonRef.current.classList.add("selected");
     buttonRef.current.classList.remove("active");
   };
@@ -49,7 +50,7 @@ const Dropdown = ({ options, defaultOption }) => {
           background: "white",
           border: "0.8px solid black",
           height: "3rem",
-          width: "8rem",
+          width: "9rem",
           borderRadius: "2rem",
           display: "flex",
           justifyContent: "center",
@@ -88,13 +89,14 @@ const Dropdown = ({ options, defaultOption }) => {
         <ul
           className="options"
           style={{
+            paddingLeft: "1rem",
             position: "absolute",
             top: "3rem",
             listStyleType: "none",
             width: "100%",
             border: "0.8px solid black",
-            borderRadius: "2rem",
-            fontSize: "0.8rem",
+            borderRadius: "1rem",
+            fontSize: "0.6rem",
             fontFamily: "Inter, sans-serif",
             color: "black",
             overflow: "hidden",
@@ -110,7 +112,7 @@ const Dropdown = ({ options, defaultOption }) => {
               className="option"
               onClick={() => handleOptionClick(option)}
               style={{
-                padding: "0.3rem",
+                padding: "0.6rem",
                 cursor: "pointer",
                 transition: "background, color 0.3s ease",
               }}
