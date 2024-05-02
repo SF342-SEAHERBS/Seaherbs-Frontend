@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 
-const Dropdowns = ({ options, defaultOption, returnData }) => {
+const Dropdowns = ({ options, defaultOption, returnData, isClear }) => {
   const [isActive, setIsActive] = useState(false);
   const [selectedOption, setSelectedOption] = useState(defaultOption);
   const buttonRef = useRef(null);
@@ -16,12 +16,17 @@ const Dropdowns = ({ options, defaultOption, returnData }) => {
       }
     };
 
+    if (isClear) {
+      setSelectedOption(defaultOption);
+      returnData(defaultOption);
+    }
+
     document.addEventListener("click", handleOutsideClick);
 
     return () => {
       document.removeEventListener("click", handleOutsideClick);
     };
-  }, []);
+  }, [isClear, defaultOption, returnData]);
 
   const toggleDropdown = () => {
     setIsActive(!isActive);

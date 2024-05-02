@@ -9,6 +9,8 @@ const SearchPage = () => {
   const [searchHistory, setSearchHistory] = useState([]);
   const [showHistory, setShowHistory] = useState(false);
   const [searchBarWidth, setSearchBarWidth] = useState(700);
+  const [systemClear, setSystemClear] = useState(false);
+  const [originClear, setOriginClear] = useState(false);
 
   const navigate = useNavigate();
 
@@ -153,34 +155,38 @@ const SearchPage = () => {
   };
 
   const filterFromOrigin = async (originName) => {
-    const result = await fetchOriginData(originName);
-    let newOriginsFormat = [];
-    Array.from(JSON.parse(result).origins).forEach((herb) => {
-      newOriginsFormat.push({
-        name: herb.name,
-        urlpicture: herb.urlpicture[0],
-        otherName: herb.otherName,
-        synonyms: herb.synonyms,
-        binomialName: herb.binomialName,
-        family: herb.family,
-        englishName: herb.englishName,
-        pharmacology: herb.pharmacology,
-        origin: herb.origin,
-        properties: herb.properties,
-        genusName: herb.genusName,
-        specificName: herb.specificName,
-        ecology: herb.ecology,
-        chemical: herb.chemical,
-        toxicology: herb.toxicology,
-        howToUse: herb.howToUse,
-        reference: herb.reference,
-        character: herb.character,
-
+    if (originName !== "Select Origin") {
+      setSystemClear(true);
+      setOriginClear(false)
+      const result = await fetchOriginData(originName);
+      let newOriginsFormat = [];
+      Array.from(JSON.parse(result).origins).forEach((herb) => {
+        newOriginsFormat.push({
+          name: herb.name,
+          urlpicture: herb.urlpicture[0],
+          otherName: herb.otherName,
+          synonyms: herb.synonyms,
+          binomialName: herb.binomialName,
+          family: herb.family,
+          englishName: herb.englishName,
+          pharmacology: herb.pharmacology,
+          origin: herb.origin,
+          properties: herb.properties,
+          genusName: herb.genusName,
+          specificName: herb.specificName,
+          ecology: herb.ecology,
+          chemical: herb.chemical,
+          toxicology: herb.toxicology,
+          howToUse: herb.howToUse,
+          reference: herb.reference,
+          character: herb.character,
+        });
+        console.log(herb);
       });
-      console.log(herb);
-    });
-
-    setHerbsData(newOriginsFormat);
+      setHerbsData(newOriginsFormat);
+    } else {
+      setSystemClear(false);
+    }
   };
 
   const fetchSystemData = async (system) => {
@@ -203,31 +209,37 @@ const SearchPage = () => {
   };
 
   const filterFromSystem = async (systemName) => {
-    const result = await fetchSystemData(systemName);
-    let newSystemFormat = [];
-    Array.from(JSON.parse(result).systems).forEach((herb) => {
-      newSystemFormat.push({
-        name: herb.name,
-        urlpicture: herb.urlpicture[0],
-        otherName: herb.otherName,
-        synonyms: herb.synonyms,
-        binomialName: herb.binomialName,
-        family: herb.family,
-        englishName: herb.englishName,
-        pharmacology: herb.pharmacology,
-        origin: herb.origin,
-        properties: herb.properties,
-        genusName: herb.genusName,
-        specificName: herb.specificName,
-        ecology: herb.ecology,
-        chemical: herb.chemical,
-        toxicology: herb.toxicology,
-        howToUse: herb.howToUse,
-        reference: herb.reference,
-        character: herb.character,
+    if (systemName !== "Select Systems") {
+      setOriginClear(true);
+      setSystemClear(false)
+      const result = await fetchSystemData(systemName);
+      let newSystemFormat = [];
+      Array.from(JSON.parse(result).systems).forEach((herb) => {
+        newSystemFormat.push({
+          name: herb.name,
+          urlpicture: herb.urlpicture[0],
+          otherName: herb.otherName,
+          synonyms: herb.synonyms,
+          binomialName: herb.binomialName,
+          family: herb.family,
+          englishName: herb.englishName,
+          pharmacology: herb.pharmacology,
+          origin: herb.origin,
+          properties: herb.properties,
+          genusName: herb.genusName,
+          specificName: herb.specificName,
+          ecology: herb.ecology,
+          chemical: herb.chemical,
+          toxicology: herb.toxicology,
+          howToUse: herb.howToUse,
+          reference: herb.reference,
+          character: herb.character,
+        });
       });
-    });
-    setHerbsData(newSystemFormat);
+      setHerbsData(newSystemFormat);
+    } else {
+      setOriginClear(false);
+    }
   };
 
   return (
@@ -355,6 +367,7 @@ const SearchPage = () => {
                     options={origins}
                     defaultOption="Select Origin"
                     returnData={filterFromOrigin}
+                    isClear={originClear}
                   />
                 </div>
                 <div>
@@ -362,6 +375,7 @@ const SearchPage = () => {
                     options={systems}
                     defaultOption="Select Systems"
                     returnData={filterFromSystem}
+                    isClear={systemClear}
                   />
                 </div>
               </div>
